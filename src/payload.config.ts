@@ -31,7 +31,9 @@ export default buildConfig({
         Icon: '@/components/admin/CustomIcon',
       },
       views: {
-        Dashboard: '@/components/admin/VyperDashboard',
+        Dashboard: {
+          Component: '@/components/admin/VyperDashboard',
+        },
       },
     },
   },
