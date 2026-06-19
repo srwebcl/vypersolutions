@@ -24,7 +24,6 @@ export default buildConfig({
     },
     meta: {
       titleSuffix: '- Vyper Solutions',
-      favicon: '/favicon-vyper.webp',
     },
     components: {
       graphics: {
