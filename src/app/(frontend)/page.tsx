@@ -170,7 +170,7 @@ export default async function HomePage() {
 
                 <div className="relative z-10 p-6 bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-transparent pt-12 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                   <h3 className="text-xl font-bold text-white mb-1">{project.title}</h3>
-                  <p className="text-sm text-zinc-400 line-clamp-2">{project.description}</p>
+                  <p className="text-sm text-zinc-400 line-clamp-2">Explora los detalles y galería de este proyecto destacado.</p>
                 </div>
               </div>
             ))}
