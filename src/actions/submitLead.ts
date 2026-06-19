@@ -11,7 +11,7 @@ export async function submitLead(formData: FormData) {
     name: formData.get('name') as string,
     email: formData.get('email') as string,
     phone: formData.get('phone') as string,
-    service_interest: formData.get('service_interest') as string,
+    service_interest: formData.get('service_interest') as any,
     message: formData.get('message') as string,
   }
 
