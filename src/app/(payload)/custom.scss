@@ -1,0 +1,21 @@
+/* Sobrescribir estilos globales para Vyper OS - Forzamos Dark Theme y marca azul */
+[data-theme='light'], [data-theme='dark'], :root {
+  --theme-bg: #09090b !important;           /* bg-zinc-950 */
+  --theme-elevation-50: #18181b !important; /* bg-zinc-900 */
+  --theme-elevation-100: #27272a !important;/* bg-zinc-800 */
+  --theme-elevation-150: #27272a !important;
+  --theme-elevation-200: #3f3f46 !important;/* bg-zinc-700 */
+  --theme-elevation-250: #52525b !important;/* bg-zinc-600 */
+  
+  --theme-text: #ffffff !important;
+  --theme-text-dim: #a1a1aa !important;     /* text-zinc-400 */
+  --theme-error-400: #ef4444 !important;    /* error / alertas */
+  --theme-success-400: #2563eb !important;  /* text-blue-600 */
+  --theme-success-500: #1d4ed8 !important;  /* hover buttons */
+}
+
+/* Fix específico de Tailwind para reset de anclaje global en el admin panel si aplica */
+.payload-admin {
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+}
