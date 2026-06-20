@@ -60,7 +60,7 @@ export default function Header() {
         <div className="hidden md:flex items-center justify-end shrink-0">
           <a 
             href="#contacto" 
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-lg transition-all shadow-lg hover:neon-border-vyper"
+            className="btn-vyper-primary"
           >
             Cotizar ahora
           </a>

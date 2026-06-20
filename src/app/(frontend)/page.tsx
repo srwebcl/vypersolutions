@@ -46,13 +46,13 @@ export default async function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
             <a
               href="#contacto"
-              className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-300 text-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.5)]"
+              className="btn-vyper-primary"
             >
               Cotizar Proyecto
             </a>
             <a
               href="#servicios"
-              className="px-8 py-4 bg-transparent border border-zinc-700 hover:border-zinc-500 hover:bg-zinc-900 text-white font-semibold rounded-lg transition-all duration-300 text-lg"
+              className="btn-vyper-secondary"
             >
               Ver Servicios
             </a>
