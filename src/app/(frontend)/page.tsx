@@ -37,7 +37,7 @@ export default async function HomePage() {
         
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white leading-tight">
-            Soluciones Industriales y Automotrices de <span className="text-blue-500">Alta Precisión</span>
+            Soluciones Industriales y Automotrices de <span className="text-gradient-vyper">Alta Precisión</span>
           </h1>
           <p className="text-xl md:text-2xl text-zinc-300 mb-10 max-w-2xl font-light">
             Corte Plasma CNC, Estructuras Metálicas y Preparación Motorsport en Coquimbo.

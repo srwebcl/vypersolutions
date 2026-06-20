@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .text-gradient-vyper {
+    @apply bg-gradient-to-r from-blue-600 to-cyan-400 bg-clip-text text-transparent;
+  }
+  .neon-border-vyper {
+    @apply border border-blue-500/50 shadow-[0_0_15px_rgba(37,99,235,0.4)];
+  }
+  .neon-glow-vyper {
+    @apply shadow-[0_0_20px_rgba(37,99,235,0.6)];
+  }
+}
+
 html, body {
   height: 100%;
 }

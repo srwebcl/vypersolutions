@@ -62,7 +62,7 @@ export default function ServicesCarousel({ services }: { services: any[] }) {
           return (
             <div 
               key={service.id} 
-              className="group relative rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl transition-all duration-500 overflow-hidden w-[300px] h-[450px] md:w-[350px] md:h-[500px] snap-center flex-shrink-0"
+              className="group relative rounded-2xl bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 shadow-2xl transition-all duration-500 overflow-hidden w-[300px] h-[450px] md:w-[350px] md:h-[500px] snap-center flex-shrink-0 hover:-translate-y-2 hover:neon-border-vyper"
             >
               {/* Imagen Inmersiva (Fondo Completo) */}
               <div className="absolute inset-0 bg-zinc-800">

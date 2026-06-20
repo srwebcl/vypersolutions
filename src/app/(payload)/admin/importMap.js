@@ -23,6 +23,7 @@ import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { default as default_3cbd65d11a223d349af508a309e169b3 } from '@/components/admin/CustomIcon'
 import { default as default_57ed2342ea1d8b2b1e8c752d6158ebca } from '@/components/admin/CustomLogo'
+import { default as default_613fe8f516d8515b2041d15e96cf806a } from '@/components/admin/VyperDashboard'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -52,5 +53,6 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@/components/admin/CustomIcon#default": default_3cbd65d11a223d349af508a309e169b3,
   "@/components/admin/CustomLogo#default": default_57ed2342ea1d8b2b1e8c752d6158ebca,
+  "@/components/admin/VyperDashboard#default": default_613fe8f516d8515b2041d15e96cf806a,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

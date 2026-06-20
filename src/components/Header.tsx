@@ -27,7 +27,7 @@ export default function Header() {
   ]
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900">
+    <header className="sticky top-0 z-50 w-full bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900 neon-glow-vyper transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
         
         {/* Columna 1: Logo */}
@@ -60,7 +60,7 @@ export default function Header() {
         <div className="hidden md:flex items-center justify-end shrink-0">
           <a 
             href="#contacto" 
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-lg transition-all shadow-lg shadow-blue-600/20"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-lg transition-all shadow-lg hover:neon-border-vyper"
           >
             Cotizar ahora
           </a>
