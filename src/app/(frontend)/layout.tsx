@@ -32,14 +32,14 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   }
 
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-zinc-950 text-white">
+      <body className="bg-zinc-950 text-white" suppressHydrationWarning>
         <Header />
         <main>{children}</main>
       </body>

@@ -51,7 +51,7 @@ export default function ServicesCarousel({ services }: { services: any[] }) {
       {/* Contenedor del Carrusel */}
       <div 
         ref={scrollRef}
-        className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-8 px-[10vw] md:px-[25vw] py-10 carousel-mask"
+        className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-6 px-4 md:px-12 py-10 carousel-mask"
       >
         {services.map((service: Service) => {
           // Extraemos la URL de la imagen de forma segura

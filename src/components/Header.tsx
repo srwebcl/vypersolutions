@@ -32,15 +32,14 @@ export default function Header() {
         
         {/* Columna 1: Logo */}
         <a href="/" className="flex items-center z-[60] shrink-0 h-full py-2" onClick={() => setIsOpen(false)}>
-          <div className="relative h-12 w-36 md:h-14 md:w-44">
-            <Image 
-              src="/logo-vyper-original.webp" 
-              alt="Vyper Solutions Logo" 
-              fill
-              className="object-contain object-left"
-              priority
-            />
-          </div>
+          <Image 
+            src="/logo-vyper-original.webp" 
+            alt="Vyper Solutions Logo" 
+            width={200}
+            height={60}
+            className="w-auto h-12 object-contain"
+            priority
+          />
         </a>
 
         {/* Columna 2: Navegación de Escritorio */}
