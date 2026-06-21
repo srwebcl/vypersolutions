@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
+import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 // Define a minimal interface matching the Payload service shape
@@ -15,6 +16,47 @@ interface Service {
 
 export default function ServicesCarousel({ services }: { services: any[] }) {
   const scrollRef = useRef<HTMLDivElement>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  const updateScrollState = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current
+      setCanScrollLeft(scrollLeft > 10)
+      // We consider it at the end if we are within 10px of the max scroll
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10)
+
+      // Calculate active index based on scroll position
+      const scrollPosition = scrollLeft + clientWidth / 2
+      let newIndex = 0
+      let minDistance = Infinity
+
+      Array.from(scrollRef.current.children).forEach((child, index) => {
+        const childElement = child as HTMLElement
+        const childCenter = childElement.offsetLeft + childElement.offsetWidth / 2
+        const distance = Math.abs(scrollPosition - childCenter)
+        if (distance < minDistance) {
+          minDistance = distance
+          newIndex = index
+        }
+      })
+      setActiveIndex(newIndex)
+    }
+  }
+
+  useEffect(() => {
+    const el = scrollRef.current
+    if (el) {
+      updateScrollState()
+      el.addEventListener('scroll', updateScrollState)
+      window.addEventListener('resize', updateScrollState)
+      return () => {
+        el.removeEventListener('scroll', updateScrollState)
+        window.removeEventListener('resize', updateScrollState)
+      }
+    }
+  }, [services])
 
   const scrollLeft = () => {
     if (scrollRef.current) {
@@ -42,7 +84,8 @@ export default function ServicesCarousel({ services }: { services: any[] }) {
       {/* Botón Izquierdo */}
       <button 
         onClick={scrollLeft}
-        className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black text-white p-3 rounded-full backdrop-blur transition-all focus:outline-none"
+        disabled={!canScrollLeft}
+        className={`absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-black text-white p-3 rounded-full backdrop-blur transition-all duration-300 focus:outline-none border border-zinc-700/50 hover:border-blue-500/50 shadow-lg ${!canScrollLeft ? 'opacity-0 pointer-events-none translate-x-4' : 'opacity-100 translate-x-0'}`}
         aria-label="Anterior"
       >
         <ChevronLeft size={24} />
@@ -62,12 +105,18 @@ export default function ServicesCarousel({ services }: { services: any[] }) {
           return (
             <div 
               key={service.id} 
-              className="group relative rounded-2xl bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 shadow-2xl transition-all duration-500 overflow-hidden snap-center shrink-0 w-[85vw] md:w-[400px] h-[450px] md:h-[500px] hover:-translate-y-2 hover:neon-border-vyper"
+              className="group relative rounded-3xl bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 shadow-2xl transition-all duration-500 overflow-hidden snap-center shrink-0 w-[85vw] md:w-[400px] h-[450px] md:h-[500px] hover:-translate-y-2 hover:neon-border-vyper"
             >
               {/* Imagen Inmersiva (Fondo Completo) */}
               <div className="absolute inset-0 bg-zinc-800">
                 {imageUrl ? (
-                  <img src={imageUrl} alt={service.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <Image 
+                    src={imageUrl} 
+                    alt={service.title}
+                    fill
+                    sizes="(max-width: 768px) 85vw, 400px"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110" 
+                  />
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-800">
                     <svg className="w-20 h-20 text-zinc-700 mb-4 transition-transform duration-700 group-hover:rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -78,12 +127,12 @@ export default function ServicesCarousel({ services }: { services: any[] }) {
                 )}
               </div>
 
-              {/* Degradado Tenebroso Inferior (Estilo Tesla) */}
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
+              {/* Degradado Tenebroso Inferior Optimizada */}
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500"></div>
 
               {/* Badge Superior */}
-              <div className="absolute top-4 left-4 z-10">
-                <span className={`inline-flex items-center px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full border backdrop-blur-md ${
+              <div className="absolute top-5 left-5 z-10">
+                <span className={`inline-flex items-center px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest rounded-full border backdrop-blur-md ${
                   service.division === 'Motorsport' 
                     ? 'bg-red-950/40 text-red-400 border-red-900/30'
                     : 'bg-blue-950/40 text-blue-400 border-blue-900/30'
@@ -94,15 +143,15 @@ export default function ServicesCarousel({ services }: { services: any[] }) {
 
               {/* Contenido Inferior (Títulos y CTA) */}
               <div className="absolute bottom-0 left-0 w-full p-8 flex flex-col items-center text-center z-10 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                <h3 className="text-3xl font-bold mb-3 text-white tracking-tight">{service.title}</h3>
-                <p className="text-sm text-zinc-300 font-light leading-relaxed mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 line-clamp-2">
+                <h3 className="text-3xl font-bold mb-3 text-white tracking-tight drop-shadow-md">{service.title}</h3>
+                <p className="text-sm text-zinc-300 font-light leading-relaxed mb-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 line-clamp-2">
                   {service.short_description}
                 </p>
                 
                 {/* Botón CTA Minimalista */}
                 <a 
                   href={`/servicios/${service.slug}`} 
-                  className="px-8 py-2.5 border border-white/50 hover:border-white bg-transparent hover:bg-white hover:text-black text-white text-sm font-semibold tracking-widest rounded-full transition-all duration-300 backdrop-blur-sm"
+                  className="px-8 py-3 border border-white/50 hover:border-white bg-transparent hover:bg-white hover:text-black text-white text-sm font-bold tracking-widest rounded-full transition-all duration-300 backdrop-blur-sm"
                 >
                   EXPLORAR
                 </a>
@@ -115,11 +164,22 @@ export default function ServicesCarousel({ services }: { services: any[] }) {
       {/* Botón Derecho */}
       <button 
         onClick={scrollRight}
-        className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black text-white p-3 rounded-full backdrop-blur transition-all focus:outline-none"
+        disabled={!canScrollRight}
+        className={`absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-black text-white p-3 rounded-full backdrop-blur transition-all duration-300 focus:outline-none border border-zinc-700/50 hover:border-blue-500/50 shadow-lg ${!canScrollRight ? 'opacity-0 pointer-events-none -translate-x-4' : 'opacity-100 translate-x-0'}`}
         aria-label="Siguiente"
       >
         <ChevronRight size={24} />
       </button>
+
+      {/* Indicadores de Progreso (Puntos) */}
+      <div className="flex justify-center items-center gap-2 mt-4 pb-4">
+        {services.map((_, idx) => (
+          <div 
+            key={idx} 
+            className={`h-1.5 rounded-full transition-all duration-500 ${activeIndex === idx ? 'w-8 bg-blue-500' : 'w-2 bg-zinc-700'}`}
+          />
+        ))}
+      </div>
 
     </div>
   )
