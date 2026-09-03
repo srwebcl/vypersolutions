@@ -73,6 +73,8 @@ export interface Config {
     projects: Project;
     leads: Lead;
     products: Product;
+    categories: Category;
+    statuses: Status;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +88,8 @@ export interface Config {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     leads: LeadsSelect<false> | LeadsSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    statuses: StatusesSelect<false> | StatusesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -257,38 +261,41 @@ export interface Product {
   id: number;
   title: string;
   slug: string;
+  category: 'Carros de Arrastre' | 'Tiro de Arrastre' | 'Estructuras Metálicas' | 'Accesorios' | 'Otro';
   status: 'Disponible' | 'A Pedido' | 'Agotado';
   /**
    * Ej: $1.500.000 CLP
    */
   price?: string | null;
-  features?:
-    | {
-        feature: string;
-        id?: string | null;
-      }[]
-    | null;
   gallery?:
     | {
         image: number | Media;
         id?: string | null;
       }[]
     | null;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  description?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  title: string;
+  description?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "statuses".
+ */
+export interface Status {
+  id: number;
+  title: string;
+  color?: ('positive' | 'warning' | 'negative') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -339,6 +346,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'products';
         value: number | Product;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: number | Category;
+      } | null)
+    | ({
+        relationTo: 'statuses';
+        value: number | Status;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -469,14 +484,9 @@ export interface LeadsSelect<T extends boolean = true> {
 export interface ProductsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  category?: T;
   status?: T;
   price?: T;
-  features?:
-    | T
-    | {
-        feature?: T;
-        id?: T;
-      };
   gallery?:
     | T
     | {
@@ -484,6 +494,26 @@ export interface ProductsSelect<T extends boolean = true> {
         id?: T;
       };
   description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "statuses_select".
+ */
+export interface StatusesSelect<T extends boolean = true> {
+  title?: T;
+  color?: T;
   updatedAt?: T;
   createdAt?: T;
 }

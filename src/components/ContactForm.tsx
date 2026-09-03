@@ -1,11 +1,23 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { submitLead } from '@/actions/submitLead'
 
 export default function ContactForm() {
   const [isPending, setIsPending] = useState(false)
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [initialMessage, setInitialMessage] = useState('')
+
+  useEffect(() => {
+    // Solo en cliente
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search)
+      const producto = params.get('producto')
+      if (producto) {
+        setInitialMessage(`Hola, me gustaría cotizar o consultar disponibilidad sobre el siguiente producto:\n\n- ${producto}\n\nQuedo atento/a.`)
+      }
+    }
+  }, [])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -99,6 +111,8 @@ export default function ContactForm() {
           name="message" 
           rows={4}
           required
+          defaultValue={initialMessage}
+          key={initialMessage} // Force re-render when state changes
           className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
           placeholder="Cuéntanos sobre tu proyecto..."
         ></textarea>

@@ -12,6 +12,8 @@ import { Services } from './collections/Services'
 import { Projects } from './collections/Projects'
 import { Leads } from './collections/Leads'
 import { Products } from './collections/Products'
+import { Categories } from './collections/Categories'
+import { Statuses } from './collections/Statuses'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -19,29 +21,21 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   admin: {
     user: Users.slug,
+    routes: {
+      admin: '/payload-core',
+    },
     importMap: {
       baseDir: path.resolve(dirname),
     },
     meta: {
       titleSuffix: '- Vyper Solutions',
     },
-    components: {
-      graphics: {
-        Logo: '@/components/admin/CustomLogo',
-        Icon: '@/components/admin/CustomIcon',
-      },
-      views: {
-        Dashboard: {
-          Component: '@/components/admin/VyperDashboard',
-        },
-      },
-    },
   },
   i18n: {
     supportedLanguages: { es },
     fallbackLanguage: 'es',
   },
-  collections: [Users, Media, Services, Projects, Leads, Products],
+  collections: [Users, Media, Services, Projects, Leads, Products, Categories, Statuses],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

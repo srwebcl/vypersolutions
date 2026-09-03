@@ -3,6 +3,7 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import ContactForm from '@/components/ContactForm'
 import ServicesCarousel from '@/components/ServicesCarousel'
+import ProductCard from '@/components/ProductCard'
 
 export default async function HomePage() {
   const payloadConfig = await config
@@ -20,7 +21,12 @@ export default async function HomePage() {
     }),
     payload.find({
       collection: 'products',
-      limit: 10,
+      where: {
+        isFeatured: {
+          equals: true,
+        },
+      },
+      limit: 6, // Hasta 6 destacados
     })
   ])
 
@@ -91,52 +97,10 @@ export default async function HomePage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => {
-              // Determinamos el color del badge según el status
-              let statusClasses = 'bg-blue-950/50 text-blue-400 border-blue-900/50'
-              if (product.status === 'Agotado') statusClasses = 'bg-red-950/50 text-red-400 border-red-900/50'
-              if (product.status === 'A Pedido') statusClasses = 'bg-amber-950/50 text-amber-400 border-amber-900/50'
-
-              return (
-                <div key={product.id} className="group rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 shadow-xl transition-all hover:border-zinc-600 hover:-translate-y-1 duration-300 flex flex-col">
-                  {/* Imagen Placeholder del Producto */}
-                  <div className="relative aspect-video bg-zinc-800 flex items-center justify-center border-b border-zinc-800">
-                    <svg className="w-12 h-12 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                    </svg>
-                    <div className="absolute top-4 right-4">
-                       <span className={`px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full border ${statusClasses}`}>
-                        {product.status}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-2xl font-bold text-white mb-2">{product.title}</h3>
-                    
-                    {product.price && (
-                      <p className="text-xl text-blue-400 font-semibold mb-6">{product.price}</p>
-                    )}
-
-                    {product.features && product.features.length > 0 && (
-                      <ul className="space-y-3 mb-8 flex-grow">
-                        {product.features.map((item, index) => (
-                          <li key={index} className="flex items-start text-zinc-300">
-                            <svg className="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                            <span>{item.feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-
-                    <a href="#contacto" className="mt-auto w-full block text-center py-3 px-4 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold rounded-lg transition-colors">
-                      Consultar
-                    </a>
-                  </div>
-                </div>
-              )
-            })}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
           </div>
         )}
       </section>

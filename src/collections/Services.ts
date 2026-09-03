@@ -25,7 +25,7 @@ export const Services: CollectionConfig = {
       required: true,
       options: [
         { label: 'Industrial', value: 'Industrial' },
-        { label: 'Motorsport', value: 'Motorsport' },
+        { label: 'Mecánica', value: 'Motorsport' },
       ],
     },
     {

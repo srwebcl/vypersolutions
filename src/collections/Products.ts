@@ -22,15 +22,30 @@ export const Products: CollectionConfig = {
       label: 'Slug (URL)',
     },
     {
-      name: 'status',
-      type: 'select',
+      name: 'isFeatured',
+      type: 'checkbox',
+      label: 'Producto Destacado',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        description: 'Mostrar este producto en el Inicio (Máx 6)',
+      },
+    },
+    {
+      name: 'category',
+      type: 'relationship',
+      relationTo: 'categories',
       required: true,
-      defaultValue: 'Disponible',
-      options: [
-        { label: 'Disponible', value: 'Disponible' },
-        { label: 'A Pedido', value: 'A Pedido' },
-        { label: 'Agotado', value: 'Agotado' },
-      ],
+      label: 'Categoría',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'status',
+      type: 'relationship',
+      relationTo: 'statuses',
+      required: true,
       admin: {
         position: 'sidebar',
       },
@@ -43,22 +58,6 @@ export const Products: CollectionConfig = {
       admin: {
         description: 'Ej: $1.500.000 CLP',
       },
-    },
-    {
-      name: 'features',
-      type: 'array',
-      label: 'Características principales',
-      labels: {
-        singular: 'Característica',
-        plural: 'Características',
-      },
-      fields: [
-        {
-          name: 'feature',
-          type: 'text',
-          required: true,
-        },
-      ],
     },
     {
       name: 'gallery',
@@ -79,7 +78,7 @@ export const Products: CollectionConfig = {
     },
     {
       name: 'description',
-      type: 'richText',
+      type: 'textarea',
       label: 'Descripción detallada',
     },
   ],
