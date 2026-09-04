@@ -62,7 +62,7 @@ export default async function CollectionListPage({ params }: { params: Promise<{
   
   // @ts-ignore (dynamic collection type)
   const data = await payload.find({
-    collection: resolvedParams.collection,
+    collection: resolvedParams.collection as any,
     limit: 50,
     sort: '-createdAt'
   })

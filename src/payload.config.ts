@@ -19,11 +19,11 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  routes: {
+    admin: '/payload-core',
+  },
   admin: {
     user: Users.slug,
-    routes: {
-      admin: '/payload-core',
-    },
     importMap: {
       baseDir: path.resolve(dirname),
     },
@@ -45,6 +45,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
+    push: true,
   }),
   sharp,
   plugins: [],

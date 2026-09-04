@@ -32,7 +32,7 @@ export async function saveRecord(collection: string, id: string | null, data: an
     let result
     if (id && id !== 'new') {
       result = await payload.update({
-        collection,
+        collection: collection as any,
         id,
         data,
         user,
@@ -40,7 +40,7 @@ export async function saveRecord(collection: string, id: string | null, data: an
       })
     } else {
       result = await payload.create({
-        collection,
+        collection: collection as any,
         data,
         user,
         overrideAccess: false,

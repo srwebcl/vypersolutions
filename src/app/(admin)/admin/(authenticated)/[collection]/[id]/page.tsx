@@ -44,7 +44,7 @@ export default async function CollectionEditPage({ params }: { params: Promise<{
     try {
       // @ts-ignore
       doc = await payload.findByID({
-        collection: resolvedParams.collection,
+        collection: resolvedParams.collection as any,
         id: resolvedParams.id
       })
     } catch (e) {
